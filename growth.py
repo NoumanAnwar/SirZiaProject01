@@ -9,8 +9,8 @@ st.set_page_config (page_title="Data Sweeper",layout="wide")
 st.markdown("""
 <style>
 .stApp{
-background-color: #f5f5f5;
-color: #000000;
+background-color: black;
+color: white;
 }
 </style>            
         """,
@@ -22,7 +22,7 @@ st.title("Data Sweeper Sterling Integrator by Nouman Anwar")
 st.write("Transform your files between CSV and Excel formats with built-in data cleaning and visualization Creating the project for Quarter 3 !.")
 
 #file upload
-uploaded_file = st.file_uploader("Upload your files (accepts CSV and Excel)", type=["csv", "xlsx"], accept_multiple_files=(True))
+uploaded_file = st.file_uploader("Upload your files (accepts CSV and Excel)", type=["cvs", "xlsx"], accept_multiple_files=(True))
 
 if uploaded_file:
     for file in uploaded_file:
@@ -69,10 +69,10 @@ if uploaded_file:
         #Conversion Options
 
         st.subheader("Conversion Options")
-        conversion_type= st.radio(f"Convert {file.name} to:",["CVS", "EXCEL"], key=file.name)
+        conversion_type= st.radio(f"Convert {file.name} to:",["CVS", "Excel"], key=file.name)
         if st.button(f"Convert{file.name}"):
             buffer = BytesIO()
-            if conversion_type == "CVS":
+            if conversion_type == "CSV":
                 df.to.csv(buffer, index=False)
                 file.name = file.name.replace(file_ext, ".csv")
                 mime_type = "text/csv"
