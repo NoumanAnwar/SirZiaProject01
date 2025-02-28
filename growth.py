@@ -24,11 +24,12 @@ uploaded_files = st.file_uploader("Upload your files (accepts CSV and Excel)", t
 
 if uploaded_files:
     for uploaded_file in uploaded_files:
-        file_ext = os.path.splitext(uploaded_file.name)[-1].lower()
+        # Correct file extension check
+        file_ext = uploaded_file.name.split('.')[-1].lower()
 
-        if file_ext == ".csv":
+        if file_ext == "csv":
             df = pd.read_csv(uploaded_file)
-        elif file_ext == ".xlsx":
+        elif file_ext == "xlsx":
             df = pd.read_excel(uploaded_file)
         else:
             st.error(f"Unsupported file type: {file_ext}")
@@ -72,12 +73,12 @@ if uploaded_files:
             buffer = BytesIO()
             if conversion_type == "CSV":
                 df.to_csv(buffer, index=False)
-                file_name = uploaded_file.name.replace(file_ext, ".csv")
+                file_name = uploaded_file.name.replace(f".{file_ext}", ".csv")
                 mime_type = "text/csv"
 
             elif conversion_type == "Excel":
                 df.to_excel(buffer, index=False)
-                file_name = uploaded_file.name.replace(file_ext, ".xlsx")
+                file_name = uploaded_file.name.replace(f".{file_ext}", ".xlsx")
                 mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
             buffer.seek(0)
